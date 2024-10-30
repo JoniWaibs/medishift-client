@@ -1,0 +1,1 @@
+rtefc -> Create an exported React+Typescript component
