@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useClientSideRequest } from '../../hooks/useRestClient';
-import { Loading } from '../../components/Loading';
-import { Shift } from '../../models';
-import { RequestMethods } from '../../enums';
-import { Fallback } from '../../components/Fallback';
-import { useDateStore } from '../../contexts/DateContext';
-import { ShiftCard } from '../../components/ShiftCard';
+import { useClientSideRequest } from '../../../hooks/useRestClient';
+import { Loading } from '../../../components/Loading';
+import { Shift } from '../../../models';
+import { RequestMethods } from '../../../enums';
+import { Fallback } from '../../../components/Fallback';
+import { useDateStore } from '../../../contexts/DateContext';
+import { ShiftCard } from '../../../components/ShiftCard';
 import { useNavigate } from 'react-router-dom';
 
-const Shifts: React.FC = () => {
+const ShiftList: React.FC = () => {
   const navigate = useNavigate();
   const [shifts, setShifts] = useState<Shift[]>([] as Shift[])
   const startDate = useDateStore((store) => store.startDate)
@@ -39,7 +39,7 @@ const Shifts: React.FC = () => {
   }
 
   const handleCreateShiftRedirection = () => {
-    return navigate('/shifts/create', { replace: false });
+    return navigate('/shift/create', { replace: false });
   }
 
   return (
@@ -76,4 +76,4 @@ const Shifts: React.FC = () => {
   );
 };
 
-export default Shifts;
+export default ShiftList;
