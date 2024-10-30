@@ -11,7 +11,7 @@ const Signin = () => {
   const navigate = useNavigate();
   const { formState: { errors }, register, handleSubmit } = useForm<SignInProps>();
   const { request, loading, error } = useClientSideRequest({
-    onSuccessCallback: () => navigate('/shifts', { replace: true }),
+    onSuccessCallback: () => navigate('/shift/list', { replace: true }),
     method: RequestMethods.SIGN_IN
   })
 

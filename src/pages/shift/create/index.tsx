@@ -7,8 +7,7 @@ import { Loading } from "../../../components/Loading";
 import { useState } from "react";
 import { PatientSearch } from "../../../components/PatientSearch";
 
-
-export const CreateShift = () => {
+const CreateShift: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
   const { formState: { errors }, register, handleSubmit, setValue, getValues, watch } = useForm<ShiftFormData>();
   
@@ -160,3 +159,5 @@ export const CreateShift = () => {
     </div>
   )
 }
+
+export default CreateShift;
