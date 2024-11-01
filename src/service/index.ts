@@ -20,11 +20,15 @@ export class ShiftService extends BaseService  {
     async createShift(shift: ShiftFormData): Promise<AxiosResponse> {
         return this.post('shift/create', shift)
     }
+
+    async search(query?: {type?: QueryType, value?: string}): Promise<AxiosResponse<Shift[]>> {
+        //return this.get(`shift/search${query ? `?${query.type}=${query.value}` : ''}`)
+        return this.get(`shift/${query?.value}`)
+    }
 } 
 
 export class UserService extends BaseService {
     async search(query?: {type?: QueryType, value?: string}): Promise<AxiosResponse<Patient[]>> {
-
         return this.get(`/user/patient${query ? `?${query.type}=${query.value}` : ''}`)
     }
 }

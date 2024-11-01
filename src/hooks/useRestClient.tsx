@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GetShiftByIdProps, GetShiftsProps, ShiftFormData, SignInProps, SignUpProps } from "../models";
+import { GetShiftsProps, ShiftFormData, SignInProps, SignUpProps } from "../models";
 import { AuthService, ShiftService, UserService } from "../service";
 import { AxiosError, AxiosResponse } from "axios";
 import { QueryType, RequestMethods } from "../enums";
@@ -12,10 +12,10 @@ type RequestBody<M extends RequestMethods> =
   M extends RequestMethods.SIGN_IN ? SignInProps :
   M extends RequestMethods.SIGN_UP ? SignUpProps :
   M extends RequestMethods.GET_SHIFTS ? GetShiftsProps :
+  M extends RequestMethods.SEARCH_SHIFT ? {type?: QueryType, value?: string} :
   M extends RequestMethods.CREATE_SHIFT ? ShiftFormData :
   // M extends 'updateShift' ? UpdateShiftProps :
   // M extends 'createPatient' ? CreatePatientProps :
-  M extends RequestMethods.GET_PATIENT_BY_ID ? GetShiftByIdProps :
   M extends RequestMethods.SEARCH_PATIENT ? {type?: QueryType, value?: string} :
   // M extends 'updatePatient' ? UpdatePatientProps :
   never;
@@ -51,6 +51,9 @@ export const useClientSideRequest = <M extends RequestMethods  = never>({
         case RequestMethods.GET_SHIFTS:
           response = await shiftService.getShifts(payload as GetShiftsProps);
           break;
+        case RequestMethods.SEARCH_SHIFT:
+            response = await shiftService.search(payload as {type?: QueryType, value?: string});
+            break;
           // case 'updateShift':
           //   response = await shiftService.updateShift(body as UpdateShiftProps);
           //   break;

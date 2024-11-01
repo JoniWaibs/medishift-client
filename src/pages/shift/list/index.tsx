@@ -3,10 +3,10 @@ import { useClientSideRequest } from '../../../hooks/useRestClient';
 import { Loading } from '../../../components/Loading';
 import { Shift } from '../../../models';
 import { RequestMethods } from '../../../enums';
-import { Fallback } from '../../../components/Fallback';
 import { useDateStore } from '../../../contexts/DateContext';
-import { ShiftCard } from '../../../components/ShiftCard';
+import { ShiftListCard } from '../../../components/ShiftListCard';
 import { useNavigate } from 'react-router-dom';
+import Fallback from '../../../components/Fallback';
 
 const ShiftList: React.FC = () => {
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ const ShiftList: React.FC = () => {
     method: RequestMethods.GET_SHIFTS
   })
 
-  useEffect(() => {
-    const fetchShifts = async () => {
-      try {
-        const response = await request({startDate, endDate}); 
-        setShifts(response?.shifts || []); 
-      } catch (err) {}
-    };
+  const fetchShifts = async () => {
+    try {
+      const response = await request({startDate, endDate}); 
+      setShifts(response?.shifts || []); 
+    } catch (err) {}
+  };
 
+  useEffect(() => {
     fetchShifts();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -35,7 +35,7 @@ const ShiftList: React.FC = () => {
   }
 
   if(error) {
-    return <Fallback />
+    return <Fallback onRetry={fetchShifts}/>;
   }
 
   const handleCreateShiftRedirection = () => {
@@ -55,7 +55,7 @@ const ShiftList: React.FC = () => {
       
       {shifts.length >= 1 ? (
         shifts.sort((a, b) => a.startTime.localeCompare(b.startTime)).map((shift) => (
-          <ShiftCard 
+          <ShiftListCard 
             key={shift.id}
             shift={shift}
           />

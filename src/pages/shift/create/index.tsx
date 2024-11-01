@@ -148,10 +148,10 @@ const CreateShift: React.FC = () => {
     <div className="mt-8 bg-gray-100 p-4 rounded-lg">
       <h3 className="text-lg font-semibold text-gray-700">Patient</h3>
       <div className="text-gray-600">
-        <p><span className="font-medium">Nombre:</span> {patient.name}</p>
-        <p><span className="font-medium">Apellido:</span> {patient.lastName}</p>
+        <p className="capitalize"><span className="font-medium">Nombre:</span> {patient.name}</p>
+        <p className="capitalize" ><span className="font-medium">Apellido:</span> {patient.lastName}</p>
         <p><span className="font-medium">DNI:</span> {patient.identificationNumber}</p>
-        <p><span className="font-medium">OS:</span> {patient.insurerData.providerName}</p>
+        <p className="capitalize"><span className="font-medium">OS:</span> {patient.insurerData.providerName}</p>
       </div>
     </div>
   )}
