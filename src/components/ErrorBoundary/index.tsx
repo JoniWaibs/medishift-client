@@ -1,4 +1,6 @@
-import React, { Component, ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Fallback from '../Fallback';
 
 type ErrorBoundaryState = {
   hasError: boolean;
@@ -18,9 +20,16 @@ class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryStat
     console.error("ErrorBoundary caught an error", error, errorInfo);
   }
 
+  handleRetry = () => {
+    const navigate = useNavigate();
+    this.setState({ hasError: false });
+    navigate('/shift/list');
+  };
+
+
   render() {
     if (this.state.hasError) {
-      return <h2>Oops! Algo no funcionó correctamente.</h2>;
+      return <Fallback onRetry={this.handleRetry}/>;
     }
 
     return this.props.children;
