@@ -49,6 +49,7 @@ export enum RequestMethods {
   SIGN_UP = 'signUp',
   CREATE_SHIFT = 'createShift',
   GET_SHIFTS = 'getShifts',
+  SEARCH_SHIFT = 'searchShift',
   GET_PATIENT_BY_ID = 'getShiftById',
   SEARCH_PATIENT = 'searchPatient',
 }
@@ -56,4 +57,17 @@ export enum RequestMethods {
 export enum QueryType {
   SEARCH = 'search',
   ID = 'id'
+}
+
+export enum NotificationType {
+  WHATSAPP = 'whatsapp',
+  EMAIL = 'email',
+  SMS = 'sms',
+  PUSH = 'push'
+}
+
+export enum NotificationClient {
+  WHATSAPP = 'whatsapp',
+  EMAIL = 'email',
+  BROWSER = 'browser'
 }
