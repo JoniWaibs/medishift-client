@@ -48,15 +48,14 @@ export enum RequestMethods {
   SIGN_IN = 'signIn',
   SIGN_UP = 'signUp',
   CREATE_SHIFT = 'createShift',
-  GET_SHIFTS = 'getShifts',
   SEARCH_SHIFT = 'searchShift',
-  GET_PATIENT_BY_ID = 'getShiftById',
   SEARCH_PATIENT = 'searchPatient',
 }
 
 export enum QueryType {
   SEARCH = 'search',
-  ID = 'id'
+  ID = 'id',
+  DATE = 'date'
 }
 
 export enum NotificationType {

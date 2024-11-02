@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { RequestMethods } from "../../enums";
+import { QueryType, RequestMethods } from "../../enums";
 import { useClientSideRequest } from "../../hooks/useRestClient";
 import { Shift } from "../../models";
 import { Loading } from "../../components/Loading";
@@ -19,8 +19,13 @@ const ShiftDetails: React.FC = () => {
 
   const fetchShift = async () => {
     if(id) {
-      const shiftResponse = await request({ value: id });
-      setShift(shiftResponse);
+      const [shift]  = await request({
+        type: QueryType.ID,
+        values: {
+          id
+        }
+      });
+      setShift(shift || null);
     }
   }
 

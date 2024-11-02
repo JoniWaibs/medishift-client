@@ -1,3 +1,5 @@
+import { QueryType } from "../enums";
+import { Shift } from "./shift";
 
 export interface SignInProps {
     password: string;
@@ -13,13 +15,24 @@ export interface SignUpProps {
     licenseNumber: string;
 }
 
+export type CreateShiftProps = Pick<
+  Shift, 
+  'doctorId' |
+  'patientId' |
+  'date' | 
+  'startTime' |
+  'endTime' |
+  'appointmentType' |
+  'notes' |
+  'payment'
+>;
 
-export interface GetShiftsProps {
-  startDate: string;
-  endDate: string;
-}
+export type SearchShiftProps = {
+  type?: QueryType;
+  values?: Record<string, string>;
+};
 
-export interface GetShiftByIdProps {
-  id: string;
-}
-
+export type SearchPatientProps = {
+  type?: QueryType;
+  value?: string;
+};

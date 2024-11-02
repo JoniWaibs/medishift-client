@@ -34,14 +34,3 @@ export interface ShitfBasicInfo {
   patientId: string; // Reference to the patient's ID
 }
 
-export type ShiftFormData = Pick<
-  Shift, 
-  'doctorId' |
-  'patientId' |
-  'date' | 
-  'startTime' |
-  'endTime' |
-  'appointmentType' |
-  'notes' |
-  'payment'
->;
