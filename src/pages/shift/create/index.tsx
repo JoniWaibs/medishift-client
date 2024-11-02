@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Patient, ShiftFormData } from "../../../models";
+import { Patient, CreateShiftProps } from "../../../models";
 import { format } from "date-fns";
 import { RequestMethods } from "../../../enums";
 import { useClientSideRequest } from "../../../hooks/useRestClient";
@@ -9,7 +9,7 @@ import { PatientSearch } from "../../../components/PatientSearch";
 
 const CreateShift: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
-  const { formState: { errors }, register, handleSubmit, setValue, getValues, watch } = useForm<ShiftFormData>();
+  const { formState: { errors }, register, handleSubmit, setValue, getValues, watch } = useForm<CreateShiftProps>();
   
   const { request, loading, error } = useClientSideRequest({
     method: RequestMethods.CREATE_SHIFT
@@ -29,8 +29,8 @@ const CreateShift: React.FC = () => {
     setValue('startTime', e.target.value);
   };
 
-  const onSubmit: SubmitHandler<ShiftFormData> = async (shift) => {
-    const shiftData: ShiftFormData = {
+  const onSubmit: SubmitHandler<CreateShiftProps> = async (shift) => {
+    const shiftData: CreateShiftProps = {
       ...shift,
       patientId: patient!.id!,
       payment: {

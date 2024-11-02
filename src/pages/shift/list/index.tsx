@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useClientSideRequest } from '../../../hooks/useRestClient';
 import { Loading } from '../../../components/Loading';
 import { Shift } from '../../../models';
-import { RequestMethods } from '../../../enums';
+import { QueryType, RequestMethods } from '../../../enums';
 import { useDateStore } from '../../../contexts/DateContext';
 import { ShiftListCard } from '../../../components/ShiftListCard';
 import { useNavigate } from 'react-router-dom';
@@ -15,13 +15,20 @@ const ShiftList: React.FC = () => {
   const endDate = useDateStore((store) => store.endDate)
   
   const { request, loading, error } = useClientSideRequest({
-    method: RequestMethods.GET_SHIFTS
+    method: RequestMethods.SEARCH_SHIFT
   })
 
   const fetchShifts = async () => {
     try {
-      const response = await request({startDate, endDate}); 
-      setShifts(response?.shifts || []); 
+      const response = await request({
+        type: QueryType.DATE,
+        values: {
+          startDate,
+          endDate
+        }
+      }); 
+      
+      setShifts(response || []); 
     } catch (err) {}
   };
 
