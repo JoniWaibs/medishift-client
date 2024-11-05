@@ -1,12 +1,17 @@
 import { Component, ReactNode } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import Fallback from '../Fallback';
 
 type ErrorBoundaryState = {
   hasError: boolean;
 };
 
-class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryState> {
+class ErrorBoundary extends Component<
+  { children: ReactNode },
+  ErrorBoundaryState
+> {
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };
@@ -17,7 +22,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryStat
   }
 
   componentDidCatch(error: Error, errorInfo: any) {
-    console.error("ErrorBoundary caught an error", error, errorInfo);
+    console.error('ErrorBoundary caught an error', error, errorInfo);
   }
 
   handleRetry = () => {
@@ -26,10 +31,9 @@ class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryStat
     navigate('/shift/list');
   };
 
-
   render() {
     if (this.state.hasError) {
-      return <Fallback onRetry={this.handleRetry}/>;
+      return <Fallback onRetry={this.handleRetry} />;
     }
 
     return this.props.children;

@@ -1,2 +1,1 @@
-export const Loading = () => <div>Cargando...</div>
-
+export const Loading = () => <div>Cargando...</div>;

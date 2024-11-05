@@ -1,4 +1,10 @@
-import { CurrencyType, PaymentMethod, PaymentStatus, ShiftStatus } from '../enums';
+import {
+  CurrencyType,
+  PaymentMethod,
+  PaymentStatus,
+  ShiftStatus,
+} from '../enums';
+
 import { Clinic } from './clinic';
 
 export interface Payment {
@@ -33,4 +39,3 @@ export interface ShitfBasicInfo {
   doctorId: string; // Reference to the doctor's ID
   patientId: string; // Reference to the patient's ID
 }
-
