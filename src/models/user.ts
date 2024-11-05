@@ -1,4 +1,5 @@
 import { UserRole } from '../enums';
+
 import { ContactInfo, EmergencyContactInfo } from './contact';
 
 interface MedicalHistory {

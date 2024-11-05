@@ -1,0 +1,38 @@
+{
+    "extends": [
+      "react-app",
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "prettier/prettier": ["error", { "endOfLine": "auto", "semi": true }],
+      "semi": ["error", "always"],
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-unused-vars": "off",
+      "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "src/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+          }
+        }
+      ]
+    }
+  }
+  

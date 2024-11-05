@@ -1,15 +1,15 @@
 .form {
-    display: block;
-    padding: 8px;
-    background-color: rgb(124, 208, 170);
+  display: block;
+  padding: 8px;
+  background-color: rgb(124, 208, 170);
 
-    .input {
-        border: 1px solid black;
-        margin: 8px;
-    }
+  .input {
+    border: 1px solid black;
+    margin: 8px;
+  }
 
-    [type='submit']{
+  [type='submit'] {
     padding: 1px 8px;
-      background:rgb(192, 194, 34) !important;
-    }
+    background: rgb(192, 194, 34) !important;
+  }
 }

@@ -1,16 +1,19 @@
-import { create } from 'zustand'
-import { format } from 'date-fns';
+import { create } from 'zustand';
 
 export interface DateStore {
-    startDate: string;
-    endDate: string;
-    updateStart: (startDate: string) => void;
-    updateEnd: (endDate: string) => void;
+  startDate: Date;
+  endDate: Date;
+  currentDate: Date;
+  updateStart: (startDate: Date) => void;
+  updateEnd: (endDate: Date) => void;
+  updateCurrent: (currentDate: Date) => void;
 }
 
 export const useDateStore = create<DateStore>((set) => ({
-    startDate: format(Date.now(), 'yyyy-MM-dd'),
-    endDate: format(Date.now(), 'yyyy-MM-dd'),
-    updateStart: (startDate: string) => set(() => ({ startDate })),
-    updateEnd: (endDate: string) => set(() => ({ endDate }))
-}))
+  startDate: new Date(),
+  endDate: new Date(),
+  currentDate: new Date(),
+  updateStart: (startDate: Date) => set(() => ({ startDate })),
+  updateEnd: (endDate: Date) => set(() => ({ endDate })),
+  updateCurrent: (currentDate: Date) => set(() => ({ currentDate })),
+}));
