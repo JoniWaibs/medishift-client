@@ -4,9 +4,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import { QueryType, RequestMethods } from '../enums';
 import {
-  CreateShiftProps,
-  SearchPatientProps,
-  SearchShiftProps,
+  ServiceShiftProps,
+  SearchProps,
   SignInProps,
   SignUpProps,
 } from '../models';
@@ -21,11 +20,11 @@ type RequestBody<M extends RequestMethods> = M extends RequestMethods.SIGN_IN
   : M extends RequestMethods.SIGN_UP
     ? SignUpProps
     : M extends RequestMethods.CREATE_SHIFT
-      ? CreateShiftProps
+      ? ServiceShiftProps
       : M extends RequestMethods.SEARCH_SHIFT
-        ? { type?: QueryType; values?: Record<string, string> }
+        ? SearchProps
         : M extends RequestMethods.SEARCH_PATIENT
-          ? SearchPatientProps
+          ? SearchProps
           : never;
 
 export interface UseClientSideRequestProps<M> {
@@ -52,14 +51,14 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
           break;
         case RequestMethods.CREATE_SHIFT:
           response = await shiftService.createShift(
-            payload as CreateShiftProps,
+            payload as ServiceShiftProps,
           );
           break;
         case RequestMethods.SEARCH_SHIFT:
-          response = await shiftService.search(payload as SearchShiftProps);
+          response = await shiftService.search(payload as SearchProps);
           break;
         case RequestMethods.SEARCH_PATIENT:
-          response = await userService.search(payload as SearchPatientProps);
+          response = await userService.search(payload as SearchProps);
           break;
         default:
           throw new Error('Unknown method');

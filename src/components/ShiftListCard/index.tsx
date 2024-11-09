@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ImWhatsapp } from 'react-icons/im';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { QueryType, RequestMethods } from '../../enums';
 import { useClientSideRequest } from '../../hooks/useRestClient';
 import { Patient, Shift } from '../../models';
 import { Loading } from '../Loading';
 
-export const ShiftListCard = ({ shift }: { shift: Shift }) => {
+interface ShiftListCardProps {
+  shift: Shift;
+}
+
+export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
   const navigate = useNavigate();
   const [patient, setPatient] = useState<Patient | null>(null);
 
@@ -58,12 +62,19 @@ export const ShiftListCard = ({ shift }: { shift: Shift }) => {
       </div>
       <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200">
         <div className="flex justify-between items-center">
-          <div>
+          <Link
+            to={`/user/patient/${shift.patientId}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate(`/user/patient/${shift.patientId}`);
+            }}
+          >
             <p className="text-xs text-gray-700">Paciente:</p>
-            <div className="text-lg font-semibold text-gray-800 capitalize">
+            <div className="text-lg font-semibold text-blue-800 capitalize">
               {name} {lastName}
             </div>
-          </div>
+          </Link>
           <button className="bg-green-500 rounded-full p-2">
             <ImWhatsapp className="text-2xl text-white" />
           </button>

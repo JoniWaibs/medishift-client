@@ -3,10 +3,9 @@ import { AxiosResponse } from 'axios';
 import {
   Patient,
   Shift,
-  CreateShiftProps,
+  ServiceShiftProps,
   SignInProps,
-  SearchShiftProps,
-  SearchPatientProps,
+  SearchProps,
 } from '../models';
 
 import { BaseService } from './base';
@@ -22,30 +21,25 @@ export class AuthService extends BaseService {
 }
 
 export class ShiftService extends BaseService {
-  async getShifts({
-    startDate,
-    endDate,
-  }: {
-    startDate: string;
-    endDate: string;
-  }): Promise<AxiosResponse<Shift[]>> {
-    return this.get('shift/all', { startDate, endDate });
-  }
-  async createShift(shift: CreateShiftProps): Promise<AxiosResponse> {
+  async createShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
     return this.post('shift/create', shift);
   }
 
-  async search(query?: SearchShiftProps): Promise<AxiosResponse<Shift[]>> {
-    const queryString = Object.entries(query?.values || {})
+  async search(query?: SearchProps): Promise<AxiosResponse<Shift[]>> {
+    const queryString = Object.entries(query?.value || {})
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
 
     return this.get(`shift${queryString ? `?${queryString}` : ''}`);
   }
+
+  async updateShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
+    return this.put('shift/update', shift);
+  }
 }
 
 export class UserService extends BaseService {
-  async search(query?: SearchPatientProps): Promise<AxiosResponse<Patient[]>> {
+  async search(query?: SearchProps): Promise<AxiosResponse<Patient[]>> {
     return this.get(
       `/user/patient${query ? `?${query.type}=${query.value}` : ''}`,
     );

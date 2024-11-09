@@ -7,7 +7,7 @@ import { Loading } from '../../../components/Loading';
 import { PatientSearch } from '../../../components/PatientSearch';
 import { RequestMethods } from '../../../enums';
 import { useClientSideRequest } from '../../../hooks/useRestClient';
-import { Patient, CreateShiftProps } from '../../../models';
+import { Patient, ServiceShiftProps } from '../../../models';
 
 const CreateShift: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
@@ -18,7 +18,7 @@ const CreateShift: React.FC = () => {
     setValue,
     getValues,
     watch,
-  } = useForm<CreateShiftProps>();
+  } = useForm<ServiceShiftProps>();
 
   const { request, loading, error } = useClientSideRequest({
     method: RequestMethods.CREATE_SHIFT,
@@ -38,8 +38,8 @@ const CreateShift: React.FC = () => {
     setValue('startTime', e.target.value);
   };
 
-  const onSubmit: SubmitHandler<CreateShiftProps> = async (shift) => {
-    const shiftData: CreateShiftProps = {
+  const onSubmit: SubmitHandler<ServiceShiftProps> = async (shift) => {
+    const shiftData: ServiceShiftProps = {
       ...shift,
       patientId: patient!.id!,
       payment: {

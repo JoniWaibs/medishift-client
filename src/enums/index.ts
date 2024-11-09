@@ -32,6 +32,7 @@ export enum PaymentMethod {
   TRANSFER = 'transfer',
   CREDIT_CARD = 'credit_card',
   DEBIT_CARD = 'debit_card',
+  UNKNOWN = 'unknown',
 }
 
 export enum CurrencyType {
@@ -50,6 +51,7 @@ export enum RequestMethods {
   CREATE_SHIFT = 'createShift',
   SEARCH_SHIFT = 'searchShift',
   SEARCH_PATIENT = 'searchPatient',
+  UPDATE_PATIENT = 'updatePatient',
 }
 
 export enum QueryType {

@@ -50,6 +50,13 @@ export class BaseService {
     return await this.#buildRequest().post(`/${url}`, payload);
   }
 
+  protected async put(
+    url: string,
+    payload: Record<string, any>,
+  ): Promise<AxiosResponse> {
+    return await this.#buildRequest().put(`/${url}`, payload);
+  }
+
   protected async get(
     url: string,
     params?: Record<string, string>,

@@ -23,7 +23,7 @@ const ShiftList: React.FC = () => {
     try {
       const response = await request({
         type: QueryType.DATE,
-        values: {
+        value: {
           startDate: format(currentDate, 'yyyy-MM-dd'),
           endDate: format(currentDate, 'yyyy-MM-dd'),
         },
