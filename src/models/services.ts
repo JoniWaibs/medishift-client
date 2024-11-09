@@ -16,7 +16,7 @@ export interface SignUpProps {
   licenseNumber: string;
 }
 
-export type CreateShiftProps = Pick<
+export type ServiceShiftProps = Pick<
   Shift,
   | 'doctorId'
   | 'patientId'
@@ -28,12 +28,7 @@ export type CreateShiftProps = Pick<
   | 'payment'
 >;
 
-export type SearchShiftProps = {
+export type SearchProps = {
   type?: QueryType;
-  values?: Record<string, string>;
-};
-
-export type SearchPatientProps = {
-  type?: QueryType;
-  value?: string;
+  value?: string | Record<string, string>;
 };

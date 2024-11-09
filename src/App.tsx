@@ -11,6 +11,8 @@ const CreateShift = lazy(() => import('./pages/shift/create'));
 const ShiftList = lazy(() => import('./pages/shift/list'));
 const NotFound = lazy(() => import('./pages/notFound'));
 const ShiftDetails = lazy(() => import('./pages/shift'));
+const Patient = lazy(() => import('./pages/user/patient'));
+const Doctor = lazy(() => import('./pages/user/doctor'));
 
 export const routes: { path: string; element: ReactNode }[] = [
   { path: '/shift/:id', element: <ShiftDetails /> },
@@ -18,6 +20,8 @@ export const routes: { path: string; element: ReactNode }[] = [
   { path: '/shift/create', element: <CreateShift /> },
   { path: '/auth/signin', element: <Signin /> },
   { path: '/auth/signup', element: <Signup /> },
+  { path: 'user/patient/:id', element: <Patient /> },
+  { path: 'user/doctor/:id', element: <Doctor /> },
   { path: '*', element: <NotFound /> },
 ];
 

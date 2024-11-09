@@ -23,7 +23,7 @@ const ShiftDetails: React.FC = () => {
     if (id) {
       const [shift] = await request({
         type: QueryType.ID,
-        values: {
+        value: {
           id,
         },
       });
@@ -53,7 +53,15 @@ const ShiftDetails: React.FC = () => {
       <ShiftDetailsSection shift={shift} />
 
       {/* Payment Information Section */}
-      <PaymentDetailsSection payment={shift.payment} />
+      <PaymentDetailsSection
+        shift={shift}
+        onStatusChange={(updatedPayment) => {
+          console.log('Payment status updated:', updatedPayment);
+        }}
+        onPaymentMethodChange={(updatedPayment) => {
+          console.log('Payment method updated:', updatedPayment);
+        }}
+      />
     </div>
   );
 };

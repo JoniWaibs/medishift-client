@@ -3,8 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { RequestMethods, QueryType } from '../../enums';
 import { useClientSideRequest } from '../../hooks/useRestClient';
 import { Patient } from '../../models';
+interface PatientInfoSectionProps {
+  id: string;
+}
 
-export const PatientInfoSection: React.FC<{ id: string }> = ({ id }) => {
+export const PatientInfoSection: React.FC<PatientInfoSectionProps> = ({
+  id,
+}) => {
   const [patient, setPatient] = useState<Patient | null>(null);
 
   const { request } = useClientSideRequest({

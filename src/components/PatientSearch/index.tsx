@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -7,10 +7,12 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { useClientSideRequest } from '../../hooks/useRestClient';
 import { Patient } from '../../models';
 
-export const PatientSearch = ({
-  onSelectPatient,
-}: {
+interface PatientSearchProps {
   onSelectPatient: (patient: Patient) => void;
+}
+
+export const PatientSearch: React.FC<PatientSearchProps> = ({
+  onSelectPatient,
 }) => {
   const { register, watch, setValue } = useForm<{ search: string }>({
     defaultValues: { search: '' },
