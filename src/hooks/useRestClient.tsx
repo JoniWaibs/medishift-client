@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { QueryType, RequestMethods } from '../enums';
+import { RequestMethods } from '@/enums';
 import {
   ServiceShiftProps,
   SearchProps,
   SignInProps,
   SignUpProps,
-} from '../models';
-import { AuthService, ShiftService, UserService } from '../service';
+} from '@/models';
+import { AuthService, ShiftService, UserService } from '@/services';
 
 const authService = new AuthService();
 const shiftService = new ShiftService();

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { Patient } from '../models';
+import { Patient } from '@/models';
 
 export interface PatientStore {
   patients: Patient[];

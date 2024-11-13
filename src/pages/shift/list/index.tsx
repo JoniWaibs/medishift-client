@@ -3,18 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
-import DateCarousel from '../../../components/DateCarousel';
-import Fallback from '../../../components/Fallback';
-import { ShiftListCard } from '../../../components/ShiftListCard';
-import { useDateStore } from '../../../contexts/DateContext';
-import { QueryType, RequestMethods } from '../../../enums';
-import { useClientSideRequest } from '../../../hooks/useRestClient';
-import { Shift } from '../../../models';
+import DateCarousel from '@/components/DateCarousel';
+import Fallback from '@/components/Fallback';
+import { ShiftListCard } from '@/components/ShiftListCard';
+import { useDateStore, DateStore } from '@/contexts/DateContext';
+import { QueryType, RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { Shift } from '@/models';
 
 const ShiftList: React.FC = () => {
   const navigate = useNavigate();
   const [shifts, setShifts] = useState<Shift[]>([] as Shift[]);
-  const currentDate = useDateStore((store) => store.currentDate);
+  const currentDate = useDateStore((store: DateStore) => store.currentDate);
   const { error, request } = useClientSideRequest({
     method: RequestMethods.SEARCH_SHIFT,
   });

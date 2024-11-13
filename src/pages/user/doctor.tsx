@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { Avatar } from '../../components/Avatar';
-
-import patient from './patient';
+import { Avatar } from '@/components/Avatar';
 
 const DoctorDetails: React.FC = () => {
   return (

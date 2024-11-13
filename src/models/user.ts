@@ -1,6 +1,5 @@
-import { UserRole } from '../enums';
-
-import { ContactInfo, EmergencyContactInfo } from './contact';
+import { UserRole } from '@/enums';
+import { ContactInfo, EmergencyContactInfo } from '@/models/contact';
 
 interface MedicalHistory {
   updatedAt: string;

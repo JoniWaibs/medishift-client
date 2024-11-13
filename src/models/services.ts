@@ -1,7 +1,6 @@
-import { QueryType } from '../enums';
-
-import { Shift } from './shift';
-import { Doctor } from './user';
+import { QueryType } from '@/enums';
+import { Shift } from '@/models/shift';
+import { Doctor } from '@/models/user';
 
 export interface SignInProps {
   password: string;

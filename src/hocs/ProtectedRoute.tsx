@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { Loading } from '../components/Loading';
-import { RequestMethods } from '../enums';
-import { useClientSideRequest } from '../hooks/useRestClient';
+import Loading from '@/components/Loading';
+import { RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

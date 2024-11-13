@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import Fallback from '../../components/Fallback';
-import { Loading } from '../../components/Loading';
-import { PatientInfoSection } from '../../components/PatientInfo';
-import { PaymentDetailsSection } from '../../components/PaymentDetails';
-import { ShiftDetailsSection } from '../../components/ShiftDetails';
-import { QueryType, RequestMethods } from '../../enums';
-import { useClientSideRequest } from '../../hooks/useRestClient';
-import { Shift } from '../../models';
+import Fallback from '@/components/Fallback';
+import Loading from '@/components/Loading';
+import { PatientInfoSection } from '@/components/PatientInfo';
+import { PaymentDetailsSection } from '@/components/PaymentDetails';
+import { ShiftDetailsSection } from '@/components/ShiftDetails';
+import { QueryType, RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { Shift } from '@/models';
 
 const ShiftDetails: React.FC = () => {
   const { id } = useParams();

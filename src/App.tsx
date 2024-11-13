@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import ErrorBoundary from './components/ErrorBoundary';
-import { Loading } from './components/Loading';
+import Loading from './components/Loading';
 import ProtectedRoute from './hocs/ProtectedRoute';
 
 const Signin = lazy(() => import('./pages/auth/signin'));

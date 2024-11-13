@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { Avatar } from '../../components/Avatar';
-import Fallback from '../../components/Fallback';
-import { Loading } from '../../components/Loading';
-import { QueryType, RequestMethods } from '../../enums';
-import { useClientSideRequest } from '../../hooks/useRestClient';
-import { Patient } from '../../models';
+import { Avatar } from '@/components/Avatar';
+import Fallback from '@/components/Fallback';
+import Loading from '@/components/Loading';
+import { QueryType, RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { Patient } from '@/models';
 
 const PatientDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { ImWhatsapp } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { QueryType, RequestMethods } from '../../enums';
-import { useClientSideRequest } from '../../hooks/useRestClient';
-import { Patient, Shift } from '../../models';
-import { Loading } from '../Loading';
+import Loading from '@/components/Loading';
+import { QueryType, RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { Patient, Shift } from '@/models';
 
 interface ShiftListCardProps {
   shift: Shift;

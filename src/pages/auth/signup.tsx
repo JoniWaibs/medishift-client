@@ -3,10 +3,10 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Loading } from '../../components/Loading';
-import { RequestMethods, UserRole } from '../../enums';
-import { useClientSideRequest } from '../../hooks/useRestClient';
-import { SignUpProps } from '../../models';
+import Loading from '@/components/Loading';
+import { RequestMethods, UserRole } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { SignUpProps } from '@/models';
 
 const Signup: React.FC<{}> = () => {
   const {
