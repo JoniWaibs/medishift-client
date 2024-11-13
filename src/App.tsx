@@ -1,9 +1,15 @@
-import React, { lazy, ReactNode, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  RouteProps,
+} from 'react-router-dom';
 
 import ErrorBoundary from './components/ErrorBoundary';
-import { Loading } from './components/Loading';
+import Loading from './components/Loading';
+import ProtectedRoute from './hocs/ProtectedRoute';
 
 const Signin = lazy(() => import('./pages/auth/signin'));
 const Signup = lazy(() => import('./pages/auth/signup'));
@@ -14,15 +20,12 @@ const ShiftDetails = lazy(() => import('./pages/shift'));
 const Patient = lazy(() => import('./pages/user/patient'));
 const Doctor = lazy(() => import('./pages/user/doctor'));
 
-export const routes: { path: string; element: ReactNode }[] = [
-  { path: '/shift/:id', element: <ShiftDetails /> },
-  { path: '/shift/list', element: <ShiftList /> },
+const routes: RouteProps[] = [
+  { path: '/', element: <ShiftList /> },
   { path: '/shift/create', element: <CreateShift /> },
-  { path: '/auth/signin', element: <Signin /> },
-  { path: '/auth/signup', element: <Signup /> },
-  { path: 'user/patient/:id', element: <Patient /> },
-  { path: 'user/doctor/:id', element: <Doctor /> },
-  { path: '*', element: <NotFound /> },
+  { path: '/shift/:id', element: <ShiftDetails /> },
+  { path: '/user/patient/:id', element: <Patient /> },
+  { path: '/user/doctor/:id', element: <Doctor /> },
 ];
 
 const App: React.FC = () => {
@@ -31,17 +34,21 @@ const App: React.FC = () => {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            {routes.map(
-              (route: { path: string; element: ReactNode }): ReactNode => {
-                return (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={route.element}
-                  />
-                );
-              },
-            )}
+            {/* Public Routes */}
+            <Route path="/auth/signin" element={<Signin />} />
+            <Route path="/auth/signup" element={<Signup />} />
+
+            {/* Protected Routes */}
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+              />
+            ))}
+
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </ErrorBoundary>

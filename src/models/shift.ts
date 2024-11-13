@@ -3,9 +3,8 @@ import {
   PaymentMethod,
   PaymentStatus,
   ShiftStatus,
-} from '../enums';
-
-import { Clinic } from './clinic';
+} from '@/enums';
+import { Clinic } from '@/models/clinic';
 
 export interface Payment {
   requiresInvoice?: boolean;

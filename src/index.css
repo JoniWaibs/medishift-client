@@ -1,3 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background-app: rgb(238, 237, 237);
+  --background-color: #EBE0D6;
+  --border-color: #D3AA94;
+  --accent-color: #A2BCAD;
+  --heading-color: #B28479;
+}
+
+@layer components {
+  .auth-container {
+    @apply min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8;
+    background-color: var(--background-app);
+  }
+
+  .auth-form-container {
+    @apply py-8 px-4 shadow sm:rounded-lg sm:px-10;
+    background-color: var(--background-color);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .auth-heading {
+    @apply mt-6 text-center text-3xl font-extrabold;
+    color: var(--heading-color);
+  }
+
+  .auth-link {
+    @apply font-medium hover:opacity-80;
+    color: var(--accent-color);
+  }
+
+  .auth-input {
+    @apply appearance-none block w-full px-3 py-2 rounded-md shadow-sm placeholder-gray-400 focus:outline-none;
+    border: 1px solid var(--border-color);
+  }
+
+  .auth-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color);
+  }
+
+  .auth-label {
+    @apply block text-sm font-medium;
+    color: var(--heading-color);
+  }
+
+  .auth-button {
+    @apply w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white;
+    background-color: var(--accent-color);
+  }
+
+  .auth-button:hover {
+    background-color: var(--heading-color);
+  }
+
+  .auth-error {
+    @apply mt-1 text-sm;
+    color: var(--border-color);
+  }
+
+  .auth-checkbox {
+    @apply h-4 w-4 rounded;
+    border-color: var(--border-color);
+    color: var(--accent-color);
+  }
+
+  .server-error-feedback {
+    @apply rounded-md bg-red-100 p-2;  
+  }
+}

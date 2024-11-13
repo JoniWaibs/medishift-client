@@ -1,4 +1,4 @@
-import { NotificationClient, NotificationType } from '../enums';
+import { NotificationClient, NotificationType } from '@/enums';
 
 interface Notification {
   message: string;

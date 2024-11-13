@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Loading } from '../../../components/Loading';
-import { PatientSearch } from '../../../components/PatientSearch';
-import { RequestMethods } from '../../../enums';
-import { useClientSideRequest } from '../../../hooks/useRestClient';
-import { Patient, ServiceShiftProps } from '../../../models';
+import Loading from '@/components/Loading';
+import { PatientSearch } from '@/components/PatientSearch';
+import { RequestMethods } from '@/enums';
+import { useClientSideRequest } from '@/hooks/useRestClient';
+import { Patient, ServiceShiftProps } from '@/models';
 
 const CreateShift: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);

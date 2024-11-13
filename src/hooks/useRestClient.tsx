@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { QueryType, RequestMethods } from '../enums';
+import { RequestMethods } from '@/enums';
 import {
   ServiceShiftProps,
   SearchProps,
   SignInProps,
   SignUpProps,
-} from '../models';
-import { AuthService, ShiftService, UserService } from '../service';
+} from '@/models';
+import { AuthService, ShiftService, UserService } from '@/services';
 
 const authService = new AuthService();
 const shiftService = new ShiftService();
@@ -48,6 +48,12 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
       switch (method) {
         case RequestMethods.SIGN_IN:
           response = await authService.signIn(payload as SignInProps);
+          break;
+        case RequestMethods.SIGN_UP:
+          response = await authService.signUp(payload as SignUpProps);
+          break;
+        case RequestMethods.CURRENT_USER:
+          response = await authService.currentUser();
           break;
         case RequestMethods.CREATE_SHIFT:
           response = await shiftService.createShift(
