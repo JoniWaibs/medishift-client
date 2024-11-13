@@ -49,6 +49,12 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
         case RequestMethods.SIGN_IN:
           response = await authService.signIn(payload as SignInProps);
           break;
+        case RequestMethods.SIGN_UP:
+          response = await authService.signUp(payload as SignUpProps);
+          break;
+        case RequestMethods.CURRENT_USER:
+          response = await authService.currentUser();
+          break;
         case RequestMethods.CREATE_SHIFT:
           response = await shiftService.createShift(
             payload as ServiceShiftProps,

@@ -6,6 +6,7 @@ import {
   ServiceShiftProps,
   SignInProps,
   SearchProps,
+  SignUpProps,
 } from '../models';
 
 import { BaseService } from './base';
@@ -15,9 +16,13 @@ export class AuthService extends BaseService {
     return this.post('auth/sign-in', { password, email });
   }
 
-  //async signUp({ password, email, licenseNumber, name, lastName, specialization }: SignUpProps): Promise<AxiosResponse> {
-  //    console.log(password, email, licenseNumber, name, lastName, specialization)
-  //}
+  async currentUser(): Promise<AxiosResponse> {
+    return this.get('auth/current-user');
+  }
+
+  async signUp(payload: SignUpProps): Promise<AxiosResponse> {
+    return this.post('auth/sign-up', payload);
+  }
 }
 
 export class ShiftService extends BaseService {

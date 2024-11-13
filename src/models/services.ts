@@ -1,20 +1,14 @@
 import { QueryType } from '../enums';
 
 import { Shift } from './shift';
+import { Doctor } from './user';
 
 export interface SignInProps {
   password: string;
   email: string;
 }
 
-export interface SignUpProps {
-  password: string;
-  email: string;
-  name: string;
-  lastName: string;
-  specialization: string;
-  licenseNumber: string;
-}
+export interface SignUpProps extends Doctor {}
 
 export type ServiceShiftProps = Pick<
   Shift,
