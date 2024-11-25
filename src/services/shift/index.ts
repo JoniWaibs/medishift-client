@@ -1,18 +1,22 @@
 import { AxiosResponse } from 'axios';
 
-import { SignInProps, SignUpProps } from '@/models';
+import { ServiceShiftProps, SearchProps, Shift } from '@/models';
 import { BaseService } from '@/services/base';
 
-export class AuthService extends BaseService {
-  async signIn({ password, email }: SignInProps): Promise<AxiosResponse> {
-    return this.post('auth/sign-in', { password, email });
+export class ShiftService extends BaseService {
+  async createShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
+    return this.post('shift/create', shift);
   }
 
-  async currentUser(): Promise<AxiosResponse> {
-    return this.get('auth/current-user');
+  async search(query?: SearchProps): Promise<AxiosResponse<Shift[]>> {
+    const queryString = Object.entries(query?.value || {})
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
+
+    return this.get(`shift${queryString ? `?${queryString}` : ''}`);
   }
 
-  async signUp(payload: SignUpProps): Promise<AxiosResponse> {
-    return this.post('auth/sign-up', payload);
+  async updateShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
+    return this.put('shift/update', shift);
   }
 }

@@ -53,6 +53,9 @@ export enum RequestMethods {
   SEARCH_SHIFT = 'searchShift',
   SEARCH_PATIENT = 'searchPatient',
   UPDATE_PATIENT = 'updatePatient',
+  CONFIRM_EMAIL = 'confirmEmail',
+  FORGOT_PASSWORD = 'forgotPassword',
+  RESET_PASSWORD = 'resetPassword',
 }
 
 export enum QueryType {
