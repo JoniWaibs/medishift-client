@@ -19,6 +19,10 @@ const NotFound = lazy(() => import('./pages/notFound'));
 const ShiftDetails = lazy(() => import('./pages/shift'));
 const Patient = lazy(() => import('./pages/user/patient'));
 const Doctor = lazy(() => import('./pages/user/doctor'));
+const ConfirmEmail = lazy(() => import('./pages/auth/confirm-email'));
+const EmailConfirmation = lazy(() => import('./pages/auth/email-confirmation'));
+const ForgotPassword = lazy(() => import('./pages/auth/forgot-password'));
+const ResetPassword = lazy(() => import('./pages/auth/reset-password'));
 
 const routes: RouteProps[] = [
   { path: '/', element: <ShiftList /> },
@@ -37,6 +41,10 @@ const App: React.FC = () => {
             {/* Public Routes */}
             <Route path="/auth/signin" element={<Signin />} />
             <Route path="/auth/signup" element={<Signup />} />
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
+            <Route path="/email-confirmation" element={<EmailConfirmation />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* Protected Routes */}
             {routes.map((route) => (

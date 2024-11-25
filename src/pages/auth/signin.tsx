@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
+import ErrorBadge from '@/components/ErrorBadge';
 import Loading from '@/components/Loading';
 import { RequestMethods } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { SignInProps } from '@/models';
-
-import '../../App.css';
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -105,29 +104,13 @@ const Signin = () => {
               </div>
 
               <div className="text-sm">
-                <Link to="/auth/forgot-password" className="auth-link">
+                <Link to="/forgot-password" className="auth-link">
                   ¿Olvidaste tu contraseña?
                 </Link>
               </div>
             </div>
 
-            {error && (
-              <div
-                className="rounded-md p-4"
-                style={{ backgroundColor: 'var(--background-color)' }}
-              >
-                <div className="flex">
-                  <div className="ml-3">
-                    <h3
-                      className="text-sm font-medium"
-                      style={{ color: 'var(--border-color)' }}
-                    >
-                      {error}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            )}
+            {error && <ErrorBadge error={error} />}
 
             <div>
               <button type="submit" className="auth-button">

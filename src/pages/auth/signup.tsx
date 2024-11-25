@@ -3,6 +3,7 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
+import ErrorBadge from '@/components/ErrorBadge';
 import Loading from '@/components/Loading';
 import { RequestMethods, UserRole } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
@@ -16,7 +17,7 @@ const Signup: React.FC<{}> = () => {
   } = useForm<SignUpProps>();
   const navigate = useNavigate();
   const { request, loading, error } = useClientSideRequest({
-    onSuccessCallback: () => navigate('/', { replace: true }),
+    onSuccessCallback: () => navigate('/confirm-email', { replace: true }),
     method: RequestMethods.SIGN_UP,
   });
 
@@ -176,25 +177,6 @@ const Signup: React.FC<{}> = () => {
             </div>
 
             <div>
-              <label htmlFor="licenseNumber" className="auth-label">
-                Número de licencia o matrícula
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register('licenseNumber', {
-                    required: 'El número de licencia es requerido',
-                  })}
-                  type="text"
-                  className="auth-input"
-                  placeholder="1234567890"
-                />
-                {errors.licenseNumber && (
-                  <p className="auth-error">{errors.licenseNumber.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
               <label htmlFor="email" className="auth-label">
                 Email
               </label>
@@ -228,7 +210,7 @@ const Signup: React.FC<{}> = () => {
                   {...register('password', {
                     required: 'La contraseña es requerida',
                     minLength: {
-                      value: 8,
+                      value: 6,
                       message: 'La contraseña debe tener al menos 8 caracteres',
                     },
                   })}
@@ -242,17 +224,7 @@ const Signup: React.FC<{}> = () => {
               </div>
             </div>
 
-            {error && (
-              <div className="server-error-feedback">
-                <div className="flex">
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-red-800">
-                      {error}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            )}
+            {error && <ErrorBadge error={error} />}
 
             <div>
               <button type="submit" className="auth-button">

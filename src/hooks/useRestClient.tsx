@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 
 import { AxiosError, AxiosResponse } from 'axios';
@@ -25,7 +26,13 @@ type RequestBody<M extends RequestMethods> = M extends RequestMethods.SIGN_IN
         ? SearchProps
         : M extends RequestMethods.SEARCH_PATIENT
           ? SearchProps
-          : never;
+          : M extends RequestMethods.CONFIRM_EMAIL
+            ? string
+              : M extends RequestMethods.FORGOT_PASSWORD
+                ? string
+                : M extends RequestMethods.RESET_PASSWORD
+                  ? { token: string; newPassword: string }
+                  : never;
 
 export interface UseClientSideRequestProps<M> {
   onSuccessCallback?: (data?: any) => void;
@@ -55,6 +62,15 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
         case RequestMethods.CURRENT_USER:
           response = await authService.currentUser();
           break;
+        case RequestMethods.CONFIRM_EMAIL:
+          response = await authService.confirmEmail(payload as string);
+          break;
+        case RequestMethods.FORGOT_PASSWORD:
+          response = await authService.forgotPassword(payload as string);
+          break;
+        case RequestMethods.RESET_PASSWORD:
+          response = await authService.resetPassword(payload as { token: string; newPassword: string });
+          break;
         case RequestMethods.CREATE_SHIFT:
           response = await shiftService.createShift(
             payload as ServiceShiftProps,
@@ -78,14 +94,10 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
 
       return response.data;
     } catch (err) {
-      console.log(err);
-      if (err instanceof AxiosError) {
-        setError(
-          `Error: Intente nuevamente - ${err.response?.data.message || err.message}`,
-        );
-      } else {
-        setError(`Error: Intente nuevamente - ${err}`);
-      }
+      console.log(`Error: ${err || 'Unknown error'}`);
+      setError(
+        `Parece que hubo un error, intentá nuevamente en unos segundos`,
+      );
     } finally {
       setLoading(false);
     }
