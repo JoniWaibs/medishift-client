@@ -70,4 +70,12 @@
   .server-error-feedback {
     @apply rounded-md bg-red-100 p-2;  
   }
+
+  .carousel-navigation-date {
+    background-color: var(--heading-color);
+  }
+  
+  .footer-navigation-icon {
+    color: var(--heading-color);
+  }
 }

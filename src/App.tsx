@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import ErrorBoundary from './components/ErrorBoundary';
+import AppLayout from './components/Layout';
 import Loading from './components/Loading';
 import ProtectedRoute from './hocs/ProtectedRoute';
 
@@ -28,6 +29,7 @@ const routes: RouteProps[] = [
   { path: '/', element: <ShiftList /> },
   { path: '/shift/create', element: <CreateShift /> },
   { path: '/shift/:id', element: <ShiftDetails /> },
+  { path: '/shift/list', element: <ShiftList /> },
   { path: '/user/patient/:id', element: <Patient /> },
   { path: '/user/doctor/:id', element: <Doctor /> },
 ];
@@ -47,13 +49,24 @@ const App: React.FC = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* Protected Routes */}
-            {routes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={<ProtectedRoute>{route.element}</ProtectedRoute>}
-              />
-            ))}
+            <Route
+              path="*"
+              element={
+                <AppLayout>
+                  <Routes>
+                    {routes.map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                          <ProtectedRoute>{route.element}</ProtectedRoute>
+                        }
+                      />
+                    ))}
+                  </Routes>
+                </AppLayout>
+              }
+            />
 
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

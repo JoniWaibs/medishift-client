@@ -18,15 +18,15 @@ export const ShiftDetailsSection: React.FC<ShiftDetailsProps> = ({ shift }) => {
     () => ({
       statusText: new Map([
         [ShiftStatus.PENDING, 'Pendiente'],
-        [ShiftStatus.COMPLETE, 'Completado'],
+        [ShiftStatus.FINISHED, 'Completado'],
         [ShiftStatus.SUSPENDED, 'Suspendido'],
-        [ShiftStatus.CANCELED, 'Cancelado'],
+        [ShiftStatus.CANCELLED, 'Cancelado'],
       ]),
       statusColor: new Map([
         [ShiftStatus.PENDING, 'text-yellow-500'],
-        [ShiftStatus.COMPLETE, 'text-green-500'],
+        [ShiftStatus.FINISHED, 'text-green-500'],
         [ShiftStatus.SUSPENDED, 'text-gray-500'],
-        [ShiftStatus.CANCELED, 'text-red-500'],
+        [ShiftStatus.CANCELLED, 'text-red-500'],
       ]),
       appointmentType: new Map([
         ['in-person', 'Presencial'],

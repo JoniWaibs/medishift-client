@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
+import TopDateCarousel from '@/components/Carousel';
 import DateCarousel from '@/components/DateCarousel';
 import Fallback from '@/components/Fallback';
 import { ShiftListCard } from '@/components/ShiftListCard';
 import { useDateStore, DateStore } from '@/contexts/DateContext';
-import { QueryType, RequestMethods } from '@/enums';
+import { QueryType, RequestMethods, ShiftStatus } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { Shift } from '@/models';
 
@@ -43,51 +44,45 @@ const ShiftList: React.FC = () => {
     return <Fallback onRetry={fetchShifts} />;
   }
 
-  const handleCreateShiftRedirection = () => {
-    return navigate('/shift/create', { replace: false });
+  const handleDateSelect = (date: Date) => {
+    console.log('Selected Date:', date.toISOString());
+    // Add logic to filter shifts by date
   };
 
   return (
     <div className="container max-w-lg mx-auto px-4 pb-16 relative">
-      <DateCarousel />
+      <TopDateCarousel />
 
       {shifts.length > 0 ? (
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <div className="p-1">
+          <h3 className="text-xl font-bold text-gray-800 mb-1 text-center">
             Tenés {shifts.length} turnos este día
-          </h1>
-          <div className="flex justify-between px-2 my-8 bg-gray-100 p-4 rounded-lg">
-            <p className="text-gray-800 text-md font-semibold px-2">
-              Desde las {shifts[0].startTime}hs
+          </h3>
+          <div className="flex px-2 bg-gray-100 rounded-lg justify-center gap-4">
+            <p className="text-gray-800 text-sm font-semibold">
+              Desde las {shifts[0].startTime} hs
             </p>
-            <p className="text-gray-800 text-md font-semibold px-2">
-              Hasta las {shifts[shifts.length - 1].endTime}hs
+            <p className="text-gray-800 text-sm font-semibold">
+              Hasta las {shifts[shifts.length - 1].endTime} hs
             </p>
           </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <p className="text-center text-gray-500">
-            No turnos disponibles para esta fecha.
+            No tenés turnos disponibles para esta fecha.
           </p>
         </div>
       )}
 
-      <div className="container mx-auto mt-4 mb-20">
-        <div className=" gap-4">
+      <div className="container mx-auto mb-20">
+        <div className="gap-4">
           {shifts.length > 0 &&
             shifts
               .sort((a, b) => a.startTime.localeCompare(b.startTime))
               .map((shift) => <ShiftListCard key={shift.id} shift={shift} />)}
         </div>
       </div>
-
-      <button
-        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none"
-        onClick={handleCreateShiftRedirection}
-      >
-        Crear turno
-      </button>
     </div>
   );
 };
