@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { ImWhatsapp } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Loading from '@/components/Loading';
-import { QueryType, RequestMethods } from '@/enums';
+import { QueryType, RequestMethods, ShiftStatus } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { Patient, Shift } from '@/models';
+import { uppercaseWording } from '@/utils/uppercaseWording';
 
 interface ShiftListCardProps {
   shift: Shift;
@@ -16,7 +17,7 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
   const navigate = useNavigate();
   const [patient, setPatient] = useState<Patient | null>(null);
 
-  const { request, loading } = useClientSideRequest({
+  const { request } = useClientSideRequest({
     method: RequestMethods.SEARCH_PATIENT,
   });
 
@@ -37,9 +38,24 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  const { statusColor } = useMemo(
+    () => ({
+      statusColor: new Map([
+        [ShiftStatus.PENDING, 'border-yellow-400'],
+        [ShiftStatus.FINISHED, ' border-green-400'],
+        [ShiftStatus.CANCELLED, 'border-red-400'],
+        [ShiftStatus.SUSPENDED, 'border-gray-400'],
+      ]),
+    }),
+    [],
+  );
+
+  const handleOpenWhatsapp = () => {
+    window.open(
+      `https://wa.me/${patient?.contactInfo?.phone.countryCode}${patient?.contactInfo?.phone.area}${patient?.contactInfo?.phone.number}`,
+      '_blank',
+    );
+  };
 
   if (!patient) {
     return (
@@ -48,11 +64,11 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
   }
 
   const { name, lastName } = patient;
-  const { date, startTime, endTime, notes } = shift;
+  const { date, startTime, endTime, notes, status } = shift;
 
   return (
     <div
-      className="mb-4 cursor-pointer"
+      className="mb-4 cursor-pointer relative"
       onClick={() => navigate(`/shift/${shift.id}`)}
     >
       <div className="flex justify-between">
@@ -60,14 +76,16 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
           {startTime}
         </p>
       </div>
-      <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+      <div
+        className={`${statusColor.get(status)} bg-white shadow-md rounded-lg p-4 border border-gray-200 border-l-8`}
+      >
         <div className="flex justify-between items-center">
           <Link
-            to={`/user/patient/${shift.patientId}`}
+            to={`/user/patient/details/${shift.patientId}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              navigate(`/user/patient/${shift.patientId}`);
+              navigate(`/user/patient/details/${shift.patientId}`);
             }}
           >
             <p className="text-xs text-gray-700">Paciente:</p>
@@ -75,14 +93,33 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
               {name} {lastName}
             </div>
           </Link>
-          <button className="bg-green-500 rounded-full p-2">
-            <ImWhatsapp className="text-2xl text-white" />
-          </button>
+          {patient.contactInfo?.phone.number && (
+            <button
+              className="bg-green-500 rounded-full p-2"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleOpenWhatsapp();
+              }}
+            >
+              <ImWhatsapp className="text-2xl text-white" />
+            </button>
+          )}
         </div>
         <div className="text-gray-600">
-          <div>
-            <span className="text-xs text-gray-700">Fecha:</span>
-            <p className="font-medium text-gray-800 font-semibold">{date}</p>
+          <div className="flex justify-between">
+            <div>
+              <span className="text-xs text-gray-700">Fecha:</span>
+              <p className="font-medium text-gray-800 font-semibold">{date}</p>
+            </div>
+            <div>
+              <span className="text-xs text-gray-700">Modalidad:</span>
+              <p className="font-medium text-gray-800 font-semibold flex justify-end">
+                {shift.appointmentType
+                  ? uppercaseWording(shift.appointmentType)
+                  : ''}
+              </p>
+            </div>
           </div>
 
           <div className="flex justify-between">
@@ -94,14 +131,14 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
             </div>
             <div>
               <span className="text-xs text-gray-700">Hasta:</span>
-              <p className="font-medium text-gray-800 font-semibold">
+              <p className="font-medium text-gray-800 font-semibold flex justify-end">
                 {endTime}
               </p>
             </div>
           </div>
         </div>
         {notes && (
-          <div className="text-gray-800, bg-gray-100 p-2 rounded-md mt-4 text-sm">
+          <div className="text-gray-800 bg-gray-100 p-2 rounded-md mt-4 text-sm">
             <p>{notes}</p>
           </div>
         )}

@@ -227,7 +227,7 @@ const Signup: React.FC<{}> = () => {
             {error && <ErrorBadge error={error} />}
 
             <div>
-              <button type="submit" className="auth-button">
+              <button type="submit" className="submit-button">
                 Crear cuenta
               </button>
             </div>

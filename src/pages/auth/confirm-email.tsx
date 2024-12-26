@@ -31,7 +31,7 @@ const ConfirmEmail: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              <button className="auth-button">
+              <button className="submit-button">
                 Reenviar correo de confirmación
               </button>
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import Loading from '@/components/Loading';
+import { useUserStore } from '@/contexts/UserContext';
 import { RequestMethods } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 
@@ -12,13 +13,8 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
-  const [authState, setAuthState] = useState<{
-    isAuthenticated: boolean | null;
-    isLoading: boolean;
-  }>({
-    isAuthenticated: null,
-    isLoading: true,
-  });
+  const setUser = useUserStore((store) => store.setUser);
+  const user = useUserStore((store) => store.user);
 
   const { request } = useClientSideRequest({
     method: RequestMethods.CURRENT_USER,
@@ -29,15 +25,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       try {
         const response = await request();
 
-        setAuthState({
-          isAuthenticated: !!response.user.id,
-          isLoading: false,
-        });
+        setUser(response.user);
       } catch {
-        setAuthState({
-          isAuthenticated: false,
-          isLoading: false,
-        });
+        setUser(null);
       }
     };
 
@@ -45,11 +35,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (authState.isLoading) {
+  if (user === null) {
     return <Loading />;
   }
 
-  if (!authState.isAuthenticated) {
+  if (!user) {
     return (
       <Navigate to="/auth/signin" state={{ from: location.pathname }} replace />
     );

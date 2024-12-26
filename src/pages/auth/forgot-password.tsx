@@ -59,7 +59,7 @@ const ForgotPassword: React.FC = () => {
               </div>
               {error && <ErrorBadge error={error} />}
               <div>
-                <button type="submit" className="auth-button">
+                <button type="submit" className="submit-button">
                   Enviar correo de recuperación
                 </button>
               </div>

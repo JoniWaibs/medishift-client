@@ -95,7 +95,7 @@ const EmailConfirmation: React.FC = () => {
                 <button
                   onClick={handleConfirmEmail}
                   disabled={!token || loading}
-                  className="auth-button"
+                  className="submit-button"
                 >
                   {loading ? 'Confirmando...' : 'Confirmar Email'}
                 </button>

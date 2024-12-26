@@ -57,14 +57,16 @@ export const PatientSearch: React.FC<PatientSearchProps> = ({
   };
 
   return (
-    <div className="py-4 max-w-lg mx-auto">
+    <div className="relative">
       {error && <p>{error}</p>}
       <input
+        type="text"
+        id="patient"
         {...register('search')}
-        placeholder="Search patients..."
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+        placeholder="Buscar paciente..."
+        className="w-full p-2 border border-gray-300 rounded-md"
       />
-      <ul className="bg-white border border-gray-200 rounded-md shadow-md">
+      <ul className="bg-white shadow-md max-h-64 overflow-y-auto absolute top-full w-full">
         {showDropdown &&
           patients &&
           patients?.length > 0 &&
