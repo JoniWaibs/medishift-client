@@ -154,7 +154,7 @@ const ResetPassword: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!token || loading}
-                  className="auth-button"
+                  className="submit-button"
                 >
                   {loading ? 'Actualizando...' : 'Actualizar contraseña'}
                 </button>

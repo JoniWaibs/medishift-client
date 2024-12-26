@@ -1,4 +1,3 @@
-// src/components/FooterNavigation.tsx
 import React from 'react';
 
 import { IconType } from 'react-icons';
@@ -11,6 +10,8 @@ import {
 } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { useUserStore } from '@/contexts/UserContext';
+
 interface NavItem {
   label: string;
   icon: IconType;
@@ -20,12 +21,17 @@ interface NavItem {
 const FooterNavigation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useUserStore((store) => store.user);
 
   const navItems: NavItem[] = [
     { label: 'Hoy', icon: FaCalendarCheck, path: '/' },
-    { label: 'Pacientes', icon: FaUsers, path: '/everyone' },
+    { label: 'Pacientes', icon: FaUsers, path: '/user/patient/list' },
     { label: 'Turnos', icon: FaCalendarCheck, path: '/availability' },
-    { label: 'Perfil', icon: FaUser, path: '/user/doctor/:id' },
+    {
+      label: 'Perfil',
+      icon: FaUser,
+      path: `/user/doctor/details/${user?.id}`,
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;

@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 
 import { format } from 'date-fns';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { CiEdit } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 import Loading from '@/components/Loading';
 import { PatientSearch } from '@/components/PatientSearch';
+import RadioButton from '@/components/RadioButton';
 import { RequestMethods } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
-import { Patient, ServiceShiftProps } from '@/models';
+import { AppointmentType, Patient, ServiceShiftProps } from '@/models';
+import { uppercaseWording } from '@/utils/uppercaseWording';
 
 const CreateShift: React.FC = () => {
+  const navigate = useNavigate();
   const [patient, setPatient] = useState<Patient | null>(null);
+  const [appointmentType, setAppointmentType] = useState<AppointmentType>(
+    AppointmentType.IN_PERSON,
+  );
   const {
     formState: { errors },
     register,
@@ -22,10 +30,22 @@ const CreateShift: React.FC = () => {
 
   const { request, loading, error } = useClientSideRequest({
     method: RequestMethods.CREATE_SHIFT,
+    onSuccessCallback: () => {
+      setValue('date', '');
+      setValue('startTime', '');
+      setValue('endTime', '');
+      setValue('appointmentType', AppointmentType.IN_PERSON);
+      setAppointmentType(AppointmentType.IN_PERSON);
+      setValue('notes', '');
+      setValue('payment.amount', 0);
+      setPatient(null);
+      navigate('/shift/list');
+    },
   });
 
   const selectedDate = watch('date');
   const startTime = watch('startTime');
+  const endTime = watch('endTime');
   const today = format(new Date(), 'yyyy-MM-dd');
   const currentTime = format(new Date(), 'HH:mm');
 
@@ -38,27 +58,22 @@ const CreateShift: React.FC = () => {
     setValue('startTime', e.target.value);
   };
 
+  const handleAppointmentTypeChange = (value: AppointmentType) => {
+    setAppointmentType(value);
+    setValue('appointmentType', value);
+  };
+
   const onSubmit: SubmitHandler<ServiceShiftProps> = async (shift) => {
     const shiftData: ServiceShiftProps = {
       ...shift,
       patientId: patient!.id!,
+      appointmentType: appointmentType,
       payment: {
         amount: Number(shift.payment),
       },
     };
 
-    const response = await request(shiftData);
-
-    if (response) {
-      setValue('date', '');
-      setValue('startTime', '');
-      setValue('endTime', '');
-      setValue('appointmentType', 'in-person');
-      setValue('notes', '');
-      setValue('payment.amount', 0);
-      setPatient(null);
-      alert('Cita creada exitosamente');
-    }
+    await request(shiftData);
   };
 
   if (loading) {
@@ -66,19 +81,55 @@ const CreateShift: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="px-4">
       {error && <div>{error}</div>}
-      <PatientSearch onSelectPatient={setPatient} />
-      <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">New Shift</h2>
+      <div className="py-4">
+        <h3 className="text-xl font-bold text-gray-800 text-center">
+          Crear un turno
+        </h3>
+      </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="max-w-lg mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label
+              htmlFor="patient"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Paciente
+            </label>
+            <div>
+              {patient ? (
+                <div className="flex justify-between">
+                  <input
+                    type="text"
+                    value={`${uppercaseWording(patient.name)} ${uppercaseWording(patient.lastName)}`}
+                    disabled
+                    className="w-full border border-gray-300 rounded-lg p-2"
+                  />
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setPatient(null)}
+                      className="font-bold  text-xl absolute right-0 top-0 p-2 min-w-10 min-h-10"
+                      style={{ color: 'var(--heading-color)' }}
+                    >
+                      <CiEdit />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <PatientSearch onSelectPatient={setPatient} />
+              )}
+            </div>
+          </div>
+
           <div>
             <label
               htmlFor="startTime"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Start Time
+              Hora de inicio
             </label>
             <input
               type="time"
@@ -87,7 +138,7 @@ const CreateShift: React.FC = () => {
               {...register('startTime', {
                 required: 'El tiempo de inicio es requerido',
               })}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-2 "
               onChange={handleTimeChange}
               min={getValues('date') === today ? currentTime : undefined}
             />
@@ -103,7 +154,7 @@ const CreateShift: React.FC = () => {
               htmlFor="endTime"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              End Time
+              Hora de finalización
             </label>
             <input
               type="time"
@@ -115,7 +166,7 @@ const CreateShift: React.FC = () => {
                     ? 'La hora de finalización debe ser mayor a la hora de inicio'
                     : true,
               })}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-2 "
               min={startTime || undefined}
             />
             {errors.endTime && (
@@ -130,14 +181,14 @@ const CreateShift: React.FC = () => {
               htmlFor="date"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Date
+              Fecha del turno
             </label>
             <input
               type="date"
               id="date"
               value={selectedDate}
               {...register('date', { required: 'La fecha es requerida' })}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-2 "
               onChange={handleDateChange}
               min={today}
             />
@@ -153,18 +204,28 @@ const CreateShift: React.FC = () => {
               htmlFor="appointmentType"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Appointment Type
+              Modalidad
             </label>
-            <select
-              id="appointmentType"
-              {...register('appointmentType', {
-                required: 'El tipo de cita es requerido',
-              })}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="in-person">Presencial</option>
-              <option value="virtual">Virtual</option>
-            </select>
+            <div className="flex space-x-4">
+              <RadioButton
+                label="Presencial"
+                value={AppointmentType.IN_PERSON}
+                name="appointmentType"
+                selectedValue={appointmentType}
+                onChange={(value) =>
+                  handleAppointmentTypeChange(value as AppointmentType)
+                }
+              />
+              <RadioButton
+                label="Virtual"
+                value={AppointmentType.VIRTUAL}
+                name="appointmentType"
+                selectedValue={appointmentType}
+                onChange={(value) =>
+                  handleAppointmentTypeChange(value as AppointmentType)
+                }
+              />
+            </div>
             {errors.appointmentType && (
               <span className="text-red-500 text-sm">
                 {errors.appointmentType.message}
@@ -177,12 +238,12 @@ const CreateShift: React.FC = () => {
               htmlFor="notes"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Notes
+              Notas
             </label>
             <textarea
               id="notes"
               {...register('notes')}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-2"
             />
           </div>
 
@@ -191,7 +252,7 @@ const CreateShift: React.FC = () => {
               htmlFor="payment"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Payment
+              Honorarios
             </label>
             <input
               type="number"
@@ -199,7 +260,7 @@ const CreateShift: React.FC = () => {
               {...register('payment', {
                 required: 'El valor de la cita es requerido',
               })}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-2 "
             />
             {errors.payment && (
               <span className="text-red-500 text-sm">
@@ -210,35 +271,12 @@ const CreateShift: React.FC = () => {
 
           <button
             type="submit"
-            disabled={!patient}
-            className="w-full bg-blue-500 text-white rounded-lg py-2 font-semibold hover:bg-blue-600 transition duration-200"
+            className="submit-button"
+            disabled={!patient || !selectedDate || !startTime || !endTime}
           >
-            Crear cita
+            Guardar
           </button>
         </form>
-
-        {patient && (
-          <div className="mt-8 bg-gray-100 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-700">Patient</h3>
-            <div className="text-gray-600">
-              <p className="capitalize">
-                <span className="font-medium">Nombre:</span> {patient.name}
-              </p>
-              <p className="capitalize">
-                <span className="font-medium">Apellido:</span>{' '}
-                {patient.lastName}
-              </p>
-              <p>
-                <span className="font-medium">DNI:</span>{' '}
-                {patient.identificationNumber}
-              </p>
-              <p className="capitalize">
-                <span className="font-medium">OS:</span>{' '}
-                {patient.insurerData.providerName}
-              </p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

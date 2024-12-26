@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { ShiftStatus } from '../../enums';
-import { Shift } from '../../models';
+import { AppointmentType, Shift } from '../../models';
 import { ShiftDataField } from '../ShiftDataField';
 import { StatusDropdown } from '../StatusDropDown';
 
@@ -29,8 +29,8 @@ export const ShiftDetailsSection: React.FC<ShiftDetailsProps> = ({ shift }) => {
         [ShiftStatus.CANCELLED, 'text-red-500'],
       ]),
       appointmentType: new Map([
-        ['in-person', 'Presencial'],
-        ['virtual', 'Virtual'],
+        [AppointmentType.IN_PERSON, 'Presencial'],
+        [AppointmentType.VIRTUAL, 'Virtual'],
       ]),
     }),
     [],

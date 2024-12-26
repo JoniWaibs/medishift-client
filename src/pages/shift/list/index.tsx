@@ -3,17 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
-import TopDateCarousel from '@/components/Carousel';
-import DateCarousel from '@/components/DateCarousel';
 import Fallback from '@/components/Fallback';
 import { ShiftListCard } from '@/components/ShiftListCard';
+import TopDateCarousel from '@/components/TopDateCarousel';
 import { useDateStore, DateStore } from '@/contexts/DateContext';
-import { QueryType, RequestMethods, ShiftStatus } from '@/enums';
+import { QueryType, RequestMethods } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { Shift } from '@/models';
 
 const ShiftList: React.FC = () => {
-  const navigate = useNavigate();
   const [shifts, setShifts] = useState<Shift[]>([] as Shift[]);
   const currentDate = useDateStore((store: DateStore) => store.currentDate);
   const { error, request } = useClientSideRequest({
@@ -44,11 +42,6 @@ const ShiftList: React.FC = () => {
     return <Fallback onRetry={fetchShifts} />;
   }
 
-  const handleDateSelect = (date: Date) => {
-    console.log('Selected Date:', date.toISOString());
-    // Add logic to filter shifts by date
-  };
-
   return (
     <div className="container max-w-lg mx-auto px-4 pb-16 relative">
       <TopDateCarousel />
@@ -56,7 +49,8 @@ const ShiftList: React.FC = () => {
       {shifts.length > 0 ? (
         <div className="p-1">
           <h3 className="text-xl font-bold text-gray-800 mb-1 text-center">
-            Tenés {shifts.length} turnos este día
+            Tenés {shifts.length} {shifts.length === 1 ? 'turno' : 'turnos'}{' '}
+            este día
           </h3>
           <div className="flex px-2 bg-gray-100 rounded-lg justify-center gap-4">
             <p className="text-gray-800 text-sm font-semibold">

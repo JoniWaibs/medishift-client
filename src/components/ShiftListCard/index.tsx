@@ -7,6 +7,7 @@ import Loading from '@/components/Loading';
 import { QueryType, RequestMethods, ShiftStatus } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { Patient, Shift } from '@/models';
+import { uppercaseWording } from '@/utils/uppercaseWording';
 
 interface ShiftListCardProps {
   shift: Shift;
@@ -80,11 +81,11 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
       >
         <div className="flex justify-between items-center">
           <Link
-            to={`/user/patient/${shift.patientId}`}
+            to={`/user/patient/details/${shift.patientId}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              navigate(`/user/patient/${shift.patientId}`);
+              navigate(`/user/patient/details/${shift.patientId}`);
             }}
           >
             <p className="text-xs text-gray-700">Paciente:</p>
@@ -106,9 +107,19 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
           )}
         </div>
         <div className="text-gray-600">
-          <div>
-            <span className="text-xs text-gray-700">Fecha:</span>
-            <p className="font-medium text-gray-800 font-semibold">{date}</p>
+          <div className="flex justify-between">
+            <div>
+              <span className="text-xs text-gray-700">Fecha:</span>
+              <p className="font-medium text-gray-800 font-semibold">{date}</p>
+            </div>
+            <div>
+              <span className="text-xs text-gray-700">Modalidad:</span>
+              <p className="font-medium text-gray-800 font-semibold flex justify-end">
+                {shift.appointmentType
+                  ? uppercaseWording(shift.appointmentType)
+                  : ''}
+              </p>
+            </div>
           </div>
 
           <div className="flex justify-between">
@@ -120,7 +131,7 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
             </div>
             <div>
               <span className="text-xs text-gray-700">Hasta:</span>
-              <p className="font-medium text-gray-800 font-semibold">
+              <p className="font-medium text-gray-800 font-semibold flex justify-end">
                 {endTime}
               </p>
             </div>

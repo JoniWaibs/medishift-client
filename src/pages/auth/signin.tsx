@@ -113,7 +113,7 @@ const Signin = () => {
             {error && <ErrorBadge error={error} />}
 
             <div>
-              <button type="submit" className="auth-button">
+              <button type="submit" className="submit-button">
                 Iniciar sesión
               </button>
             </div>
