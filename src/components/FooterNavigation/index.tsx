@@ -26,7 +26,7 @@ const FooterNavigation: React.FC = () => {
   const navItems: NavItem[] = [
     { label: 'Hoy', icon: FaCalendarCheck, path: '/' },
     { label: 'Pacientes', icon: FaUsers, path: '/user/patient/list' },
-    { label: 'Turnos', icon: FaCalendarCheck, path: '/availability' },
+    { label: 'Turnos', icon: FaCalendarCheck, path: '/shift/list' },
     {
       label: 'Perfil',
       icon: FaUser,
@@ -44,7 +44,9 @@ const FooterNavigation: React.FC = () => {
             key={item.label}
             onClick={() => navigate(item.path)}
             className={`flex flex-col items-center text-sm pb ${
-              isActive(item.path) ? 'footer-navigation-icon' : 'text-gray-400'
+              isActive(item.path)
+                ? 'footer-navigation-icon-selected'
+                : 'text-gray-400'
             }`}
           >
             <item.icon size={24} />
@@ -52,12 +54,11 @@ const FooterNavigation: React.FC = () => {
           </button>
         ))}
 
-        {/* Central Plus Button */}
         <button
           onClick={() => navigate('/shift/create')}
           className="flex flex-col items-center pb-4"
           style={{
-            color: 'var(--heading-color)',
+            color: 'var(--accent-color)',
           }}
         >
           <FaPlusCircle size={50} />
@@ -68,7 +69,9 @@ const FooterNavigation: React.FC = () => {
             key={item.label}
             onClick={() => navigate(item.path)}
             className={`flex flex-col items-center text-sm ${
-              isActive(item.path) ? 'footer-navigation-icon' : 'text-gray-400'
+              isActive(item.path)
+                ? 'footer-navigation-icon-selected'
+                : 'text-gray-400'
             }`}
           >
             <item.icon size={24} />

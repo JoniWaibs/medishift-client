@@ -7,7 +7,7 @@ import Loading from '@/components/Loading';
 import { QueryType, RequestMethods, ShiftStatus } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { Patient, Shift } from '@/models';
-import { uppercaseWording } from '@/utils/uppercaseWording';
+import { handleOpenWhatsapp } from '@/utils/openWhatsapp';
 
 interface ShiftListCardProps {
   shift: Shift;
@@ -50,16 +50,11 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
     [],
   );
 
-  const handleOpenWhatsapp = () => {
-    window.open(
-      `https://wa.me/${patient?.contactInfo?.phone.countryCode}${patient?.contactInfo?.phone.area}${patient?.contactInfo?.phone.number}`,
-      '_blank',
-    );
-  };
-
   if (!patient) {
     return (
-      <div>Los datos del paciente no estan disponibles por el momento</div>
+      <div className="opacity-50 bg-gray-200 p-4 rounded-lg">
+        Los datos del turno o del paciente no estan disponibles por el momento
+      </div>
     );
   }
 
@@ -99,7 +94,7 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                handleOpenWhatsapp();
+                handleOpenWhatsapp(patient.contactInfo!);
               }}
             >
               <ImWhatsapp className="text-2xl text-white" />
@@ -114,10 +109,8 @@ export const ShiftListCard: React.FC<ShiftListCardProps> = ({ shift }) => {
             </div>
             <div>
               <span className="text-xs text-gray-700">Modalidad:</span>
-              <p className="font-medium text-gray-800 font-semibold flex justify-end">
-                {shift.appointmentType
-                  ? uppercaseWording(shift.appointmentType)
-                  : ''}
+              <p className="font-medium text-gray-800 font-semibold flex justify-end capitalize">
+                {shift.appointmentType ? shift.appointmentType : ''}
               </p>
             </div>
           </div>

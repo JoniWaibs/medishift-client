@@ -4,9 +4,16 @@ import { SearchProps, Patient } from '@/models';
 import { BaseService } from '@/services/base';
 
 export class UserService extends BaseService {
-  async search(query?: SearchProps): Promise<AxiosResponse<Patient[]>> {
+  async search(
+    query?: SearchProps,
+    type?: 'patient' | 'doctor',
+  ): Promise<AxiosResponse<Patient[]>> {
     return this.get(
-      `/user/patient${query ? `?${query.type}=${query.value}` : ''}`,
+      `user/${type}${query ? `?${query.type}=${query.value}` : ''}`,
     );
+  }
+
+  async deletePatient(id: string): Promise<AxiosResponse<boolean>> {
+    return this.delete(`user/patient/delete/${id}`);
   }
 }

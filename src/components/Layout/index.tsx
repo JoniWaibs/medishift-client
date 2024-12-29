@@ -20,7 +20,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex justify-center items-center h-8 bg-white border-b border-gray-200">
+      <div className="flex justify-center items-center h-8 bg-white border-b border-gray-200 sticky top-0 z-50">
         Medishift
       </div>
       <main className="flex-grow bg-gray-100">{children}</main>

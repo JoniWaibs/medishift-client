@@ -16,7 +16,7 @@ export class ShiftService extends BaseService {
     return this.get(`shift${queryString ? `?${queryString}` : ''}`);
   }
 
-  async updateShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
-    return this.put('shift/update', shift);
-  }
+  //async updateShift(shift: ServiceShiftProps): Promise<AxiosResponse> {
+  //  return this.put('shift/update', shift);
+  //}
 }

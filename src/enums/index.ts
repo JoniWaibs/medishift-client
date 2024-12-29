@@ -48,10 +48,13 @@ export enum HttpMethods {
 export enum RequestMethods {
   SIGN_IN = 'signIn',
   SIGN_UP = 'signUp',
+  SIGN_OUT = 'signOut',
   CURRENT_USER = 'currentUser',
   CREATE_SHIFT = 'createShift',
   SEARCH_SHIFT = 'searchShift',
   SEARCH_PATIENT = 'searchPatient',
+  SEARCH_DOCTOR = 'searchDoctor',
+  DELETE_PATIENT = 'deletePatient',
   UPDATE_PATIENT = 'updatePatient',
   CONFIRM_EMAIL = 'confirmEmail',
   FORGOT_PASSWORD = 'forgotPassword',

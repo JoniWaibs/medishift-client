@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import Loading from '@/components/Loading';
 import { useUserStore } from '@/contexts/UserContext';
@@ -13,6 +13,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
+  const navigateLocal = useNavigate();
   const setUser = useUserStore((store) => store.setUser);
   const user = useUserStore((store) => store.user);
 
@@ -25,9 +26,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       try {
         const response = await request();
 
-        setUser(response.user);
-      } catch {
+        if (!response) {
+          throw new Error('No response');
+        }
+
+        setUser(response.user || null);
+      } catch (error) {
         setUser(null);
+        return navigateLocal('/auth/signin', {
+          state: { from: location.pathname },
+          replace: true,
+        });
       }
     };
 

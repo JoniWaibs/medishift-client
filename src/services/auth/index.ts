@@ -8,6 +8,10 @@ export class AuthService extends BaseService {
     return this.post('auth/sign-in', { password, email });
   }
 
+  async signOut(): Promise<AxiosResponse> {
+    return this.post('auth/sign-out', {});
+  }
+
   async currentUser(): Promise<AxiosResponse> {
     return this.get('auth/current-user');
   }

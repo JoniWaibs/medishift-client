@@ -1,7 +1,7 @@
 import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from 'axios';
 
 export class BaseService {
-  #baseaUrl: string = `${process.env.REACT_APP_API_URL}`;
+  #baseaUrl: string = `${process.env.REACT_APP_API_URL_DEV}`;
   #buildRequest(customHeaders?: AxiosHeaders): AxiosInstance {
     const axiosInstance = axios.create({
       baseURL: this.#baseaUrl, // Your base URL
@@ -50,24 +50,32 @@ export class BaseService {
     return await this.#buildRequest().post(`/${url}`, payload);
   }
 
-  protected async put(
-    url: string,
-    payload: Record<string, any>,
-  ): Promise<AxiosResponse> {
-    return await this.#buildRequest().put(`/${url}`, payload);
-  }
+  //protected async put(
+  //  url: string,
+  //  payload: Record<string, any>,
+  //): Promise<AxiosResponse> {
+  //  return await this.#buildRequest().put(`/${url}`, payload);
+  //}
 
   protected async get(
     url: string,
     params?: Record<string, string>,
   ): Promise<AxiosResponse> {
-    return await this.#buildRequest().get(
-      `${process.env.REACT_APP_API_URL}/${url}`,
-      {
-        params: {
-          ...(params || {}),
-        },
+    return await this.#buildRequest().get(`/${url}`, {
+      params: {
+        ...(params || {}),
       },
-    );
+    });
+  }
+
+  protected async delete(
+    url: string,
+    params?: Record<string, string>,
+  ): Promise<AxiosResponse> {
+    return await this.#buildRequest().delete(`/${url}`, {
+      params: {
+        ...(params || {}),
+      },
+    });
   }
 }
