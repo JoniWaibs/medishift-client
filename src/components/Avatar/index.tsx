@@ -35,7 +35,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         <img
           src={imageUrl || defaultImage}
           alt={name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover capitalize"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = defaultImage;

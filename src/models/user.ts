@@ -30,7 +30,7 @@ export interface UserBasicInfo {
 
 export interface Doctor extends BaseUser {
   password: string;
-  specialization?: string[];
+  specialization?: string;
   licenseNumber?: string;
   contactInfo: ContactInfo;
 }

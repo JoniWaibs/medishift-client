@@ -52,6 +52,8 @@ export enum RequestMethods {
   CREATE_SHIFT = 'createShift',
   SEARCH_SHIFT = 'searchShift',
   SEARCH_PATIENT = 'searchPatient',
+  SEARCH_DOCTOR = 'searchDoctor',
+  DELETE_PATIENT = 'deletePatient',
   UPDATE_PATIENT = 'updatePatient',
   CONFIRM_EMAIL = 'confirmEmail',
   FORGOT_PASSWORD = 'forgotPassword',

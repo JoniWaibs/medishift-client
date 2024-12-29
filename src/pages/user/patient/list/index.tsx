@@ -67,32 +67,33 @@ const PatientList: React.FC = () => {
           className="w-full border-none outline-none text-gray-800"
         />
       </div>
-      <ul className="space-y-4">
-        {filteredPatients.map((patient) => (
-          <li key={patient.id}>
-            <Link
-              to={`/user/patient/details/${patient.id}`}
-              className="block bg-white shadow-md rounded-lg p-4 border border-gray-200 hover:shadow-lg transition"
-            >
-              <div className="flex items-center">
-                <Avatar
-                  imageUrl={''}
-                  name={`${uppercaseWording(patient.name)} ${uppercaseWording(patient.lastName)}`}
-                  size="sm"
-                />
-                <div className="flex-1 ml-4">
-                  <p className="text-lg font-semibold text-gray-800">
-                    {uppercaseWording(patient.name)}{' '}
-                    {uppercaseWording(patient.lastName)}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    DNI: {patient.identificationNumber}
-                  </p>
+      <ul className="space-y-4 mb-10 pb-10">
+        {filteredPatients
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((patient: Patient) => (
+            <li key={patient.id}>
+              <Link
+                to={`/user/patient/details/${patient.id}`}
+                className="block bg-white shadow-md rounded-lg p-4 border border-gray-200 hover:shadow-lg transition"
+              >
+                <div className="flex items-center">
+                  <Avatar
+                    imageUrl={''}
+                    name={`${patient.name} ${patient.lastName}`}
+                    size="sm"
+                  />
+                  <div className="flex-1 ml-4">
+                    <p className="text-lg font-semibold text-gray-800 capitalize">
+                      {patient.name} {patient.lastName}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      DNI: {patient.identificationNumber}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          </li>
-        ))}
+              </Link>
+            </li>
+          ))}
       </ul>
     </div>
   );

@@ -4,10 +4,10 @@
 
 :root {
   --background-app: rgb(238, 237, 237);
-  --background-color: #EBE0D6;
-  --border-color: #D3AA94;
-  --accent-color: #A2BCAD;
-  --heading-color: #B28479;
+  --background-color: #ebe0d6;
+  --border-color: #d3aa94;
+  --accent-color: #a2bcad;
+  --heading-color: #b28479;
 }
 
 @layer components {
@@ -64,19 +64,25 @@
   }
 
   .server-error-feedback {
-    @apply rounded-md bg-red-100 p-2;  
+    @apply rounded-md bg-red-100 p-2;
   }
 
   .carousel-navigation-date {
     background-color: var(--heading-color);
   }
-  
-  .footer-navigation-icon {
-    color: var(--heading-color);
+
+  .footer-navigation-icon-selected {
+    color: var(--accent-color);
   }
 
   .radio-button-selected {
     border-color: var(--heading-color);
     background-color: var(--heading-color);
+  }
+
+  .delete-button {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--heading-color);
   }
 }

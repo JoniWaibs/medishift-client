@@ -11,7 +11,6 @@ import RadioButton from '@/components/RadioButton';
 import { RequestMethods } from '@/enums';
 import { useClientSideRequest } from '@/hooks/useRestClient';
 import { AppointmentType, Patient, ServiceShiftProps } from '@/models';
-import { uppercaseWording } from '@/utils/uppercaseWording';
 
 const CreateShift: React.FC = () => {
   const navigate = useNavigate();
@@ -84,9 +83,7 @@ const CreateShift: React.FC = () => {
     <div className="px-4">
       {error && <div>{error}</div>}
       <div className="py-4">
-        <h3 className="text-xl font-bold text-gray-800 text-center">
-          Crear un turno
-        </h3>
+        <h3 className="text-2xl font-bold text-gray-800">Crear un turno</h3>
       </div>
 
       <div className="max-w-lg mx-auto">
@@ -103,9 +100,9 @@ const CreateShift: React.FC = () => {
                 <div className="flex justify-between">
                   <input
                     type="text"
-                    value={`${uppercaseWording(patient.name)} ${uppercaseWording(patient.lastName)}`}
+                    value={`${patient.name} ${patient.lastName}`}
                     disabled
-                    className="w-full border border-gray-300 rounded-lg p-2"
+                    className="w-full border border-gray-300 rounded-lg p-2 capitalize"
                   />
                   <div className="relative">
                     <button
@@ -271,7 +268,7 @@ const CreateShift: React.FC = () => {
 
           <button
             type="submit"
-            className="submit-button"
+            className="font-bold py-2 px-4 submit-button"
             disabled={!patient || !selectedDate || !startTime || !endTime}
           >
             Guardar

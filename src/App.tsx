@@ -20,7 +20,7 @@ const NotFound = lazy(() => import('./pages/notFound'));
 const ShiftDetails = lazy(() => import('./pages/shift'));
 const PatientList = lazy(() => import('./pages/user/patient/list'));
 const PatientDetails = lazy(() => import('./pages/user/patient/details'));
-const Doctor = lazy(() => import('./pages/user/doctor'));
+const DoctorDetails = lazy(() => import('./pages/user/doctor/details'));
 const ConfirmEmail = lazy(() => import('./pages/auth/confirm-email'));
 const EmailConfirmation = lazy(() => import('./pages/auth/email-confirmation'));
 const ForgotPassword = lazy(() => import('./pages/auth/forgot-password'));
@@ -33,7 +33,7 @@ const routes: RouteProps[] = [
   { path: '/shift/list', element: <ShiftList /> },
   { path: '/user/patient/list', element: <PatientList /> },
   { path: '/user/patient/details/:id', element: <PatientDetails /> },
-  { path: '/user/doctor/details/:id', element: <Doctor /> },
+  { path: '/user/doctor/details/:id', element: <DoctorDetails /> },
 ];
 
 const App: React.FC = () => {
