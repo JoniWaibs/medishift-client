@@ -20,23 +20,25 @@ type RequestBody<M extends RequestMethods> = M extends RequestMethods.SIGN_IN
   ? SignInProps
   : M extends RequestMethods.SIGN_UP
     ? SignUpProps
-    : M extends RequestMethods.CREATE_SHIFT
-      ? ServiceShiftProps
-      : M extends RequestMethods.SEARCH_SHIFT
-        ? SearchProps
-        : M extends RequestMethods.SEARCH_PATIENT
+    : M extends RequestMethods.SIGN_OUT
+      ? {}
+      : M extends RequestMethods.CREATE_SHIFT
+        ? ServiceShiftProps
+        : M extends RequestMethods.SEARCH_SHIFT
           ? SearchProps
-          : M extends RequestMethods.DELETE_PATIENT
-            ? string
-            : M extends RequestMethods.SEARCH_DOCTOR
-              ? SearchProps
-              : M extends RequestMethods.CONFIRM_EMAIL
-                ? string
-                : M extends RequestMethods.FORGOT_PASSWORD
+          : M extends RequestMethods.SEARCH_PATIENT
+            ? SearchProps
+            : M extends RequestMethods.DELETE_PATIENT
+              ? string
+              : M extends RequestMethods.SEARCH_DOCTOR
+                ? SearchProps
+                : M extends RequestMethods.CONFIRM_EMAIL
                   ? string
-                  : M extends RequestMethods.RESET_PASSWORD
-                    ? { token: string; newPassword: string }
-                    : never;
+                  : M extends RequestMethods.FORGOT_PASSWORD
+                    ? string
+                    : M extends RequestMethods.RESET_PASSWORD
+                      ? { token: string; newPassword: string }
+                      : never;
 
 export interface UseClientSideRequestProps<M> {
   onSuccessCallback?: (data?: any) => void;
@@ -62,6 +64,9 @@ export const useClientSideRequest = <M extends RequestMethods = never>({
           break;
         case RequestMethods.SIGN_UP:
           response = await authService.signUp(payload as SignUpProps);
+          break;
+        case RequestMethods.SIGN_OUT:
+          response = await authService.signOut();
           break;
         case RequestMethods.CURRENT_USER:
           response = await authService.currentUser();

@@ -8,7 +8,6 @@ export class UserService extends BaseService {
     query?: SearchProps,
     type?: 'patient' | 'doctor',
   ): Promise<AxiosResponse<Patient[]>> {
-    console.log({ query, type });
     return this.get(
       `user/${type}${query ? `?${query.type}=${query.value}` : ''}`,
     );

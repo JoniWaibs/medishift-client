@@ -26,7 +26,7 @@ const FooterNavigation: React.FC = () => {
   const navItems: NavItem[] = [
     { label: 'Hoy', icon: FaCalendarCheck, path: '/' },
     { label: 'Pacientes', icon: FaUsers, path: '/user/patient/list' },
-    { label: 'Turnos', icon: FaCalendarCheck, path: '/availability' },
+    { label: 'Turnos', icon: FaCalendarCheck, path: '/shift/list' },
     {
       label: 'Perfil',
       icon: FaUser,

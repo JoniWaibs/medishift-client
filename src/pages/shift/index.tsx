@@ -46,13 +46,10 @@ const ShiftDetails: React.FC = () => {
 
   return (
     <div className="max-w-lg mx-auto p-4 space-y-6 bg-gray-50 rounded-lg shadow-md">
-      {/* Patient Information Section */}
       {shift.patientId && <PatientInfoSection id={shift.patientId} />}
 
-      {/* Shift Information Section */}
       <ShiftDetailsSection shift={shift} />
 
-      {/* Payment Information Section */}
       <PaymentDetailsSection
         shift={shift}
         onStatusChange={(updatedPayment) => {

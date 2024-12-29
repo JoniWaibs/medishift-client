@@ -48,6 +48,7 @@ export enum HttpMethods {
 export enum RequestMethods {
   SIGN_IN = 'signIn',
   SIGN_UP = 'signUp',
+  SIGN_OUT = 'signOut',
   CURRENT_USER = 'currentUser',
   CREATE_SHIFT = 'createShift',
   SEARCH_SHIFT = 'searchShift',

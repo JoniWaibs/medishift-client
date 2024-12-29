@@ -42,13 +42,18 @@ const App: React.FC = () => {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            {/* Public Routes */}
-            <Route path="/auth/signin" element={<Signin />} />
-            <Route path="/auth/signup" element={<Signup />} />
-            <Route path="/confirm-email" element={<ConfirmEmail />} />
-            <Route path="/email-confirmation" element={<EmailConfirmation />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
+            {/* Public Auth Routes */}
+            <Route path="/auth">
+              <Route path="signin" element={<Signin />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="confirm-email" element={<ConfirmEmail />} />
+              <Route
+                path="email-confirmation"
+                element={<EmailConfirmation />}
+              />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+            </Route>
 
             {/* Protected Routes */}
             <Route
@@ -70,7 +75,7 @@ const App: React.FC = () => {
               }
             />
 
-            {/* 404 Route */}
+            {/* 404 Route - Must be last */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { Avatar } from '@/components/Avatar';
+import ConfirmAlert from '@/components/ConfirmAlert';
 import Fallback from '@/components/Fallback';
 import Loading from '@/components/Loading';
 import { useUserStore } from '@/contexts/UserContext';
@@ -10,11 +13,19 @@ import { Doctor } from '@/models';
 import { unknownWording } from '@/utils/unnownWording';
 
 const DoctorDetails: React.FC = () => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const user = useUserStore((state) => state.user);
-
+  const navigate = useNavigate();
   const { request, loading } = useClientSideRequest({
     method: RequestMethods.SEARCH_DOCTOR,
+  });
+
+  const { request: signOutRequest } = useClientSideRequest({
+    method: RequestMethods.SIGN_OUT,
+    onSuccessCallback: () => {
+      navigate('/auth/signin');
+    },
   });
 
   const fetchDoctor = async () => {
@@ -30,6 +41,12 @@ const DoctorDetails: React.FC = () => {
     fetchDoctor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSignOut = async () => await signOutRequest();
+
+  const handleCancel = () => {
+    setIsAlertOpen(false);
+  };
 
   if (loading) {
     return <Loading />;
@@ -156,6 +173,23 @@ const DoctorDetails: React.FC = () => {
             </div>
           </div>
         </section>
+
+        <div>
+          <button
+            className="font-bold py-2 px-4 delete-button"
+            onClick={() => setIsAlertOpen(true)}
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        <ConfirmAlert
+          title="Confirmar acción"
+          message="¿Estás seguro de querer cerrar sesión?"
+          isOpen={isAlertOpen}
+          onConfirm={handleSignOut}
+          onCancel={handleCancel}
+        />
       </div>
     </div>
   );

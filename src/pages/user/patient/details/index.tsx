@@ -262,7 +262,7 @@ const PatientDetails: React.FC = () => {
         </div>
 
         <ConfirmAlert
-          title="Confirmar borrado"
+          title="Confirmar acción"
           message="¿Estás seguro de querer eliminar este paciente? Esta acción no puede ser revertida."
           isOpen={isAlertOpen}
           onConfirm={handleDelete}
